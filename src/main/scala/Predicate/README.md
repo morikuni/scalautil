@@ -4,7 +4,7 @@ Predicate extends Function `A => Boolean`.
 
 ## Use Case
 
-Compose with && or ||.
+Compose with `&&` or `||`.
 
 ```scala
 import scalautil._
@@ -24,7 +24,7 @@ println(containsXOrY("y")) //true
 println(containsXOrY("xy")) //true
 ```
 
-Compose with for.
+Compose with `for`.
 
 ```scala
 import scalautil._
