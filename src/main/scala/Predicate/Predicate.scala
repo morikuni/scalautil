@@ -31,6 +31,6 @@ object Predicate{
 
 	implicit def predicateAsFunction[A](predicate: Predicate[A]): A => Boolean = predicate.run
 
-	def point[A](b: Boolean): Predicate[A] = Predicate(a => b)
+	def point[A](b: Boolean): Predicate[A] = Predicate(_ => b)
 }
 

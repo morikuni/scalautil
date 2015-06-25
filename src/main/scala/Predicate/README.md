@@ -2,15 +2,15 @@
 
 Predicate extends Function `A => Boolean`.
 
-## Use Case
+## Usage
 
 Compose with `&&` or `||`.
 
 ```scala
 import scalautil._
 
-val containsX = Predicate[String](s => s.contains("x"))
-val containsY = Predicate[String](s => s.contains("y"))
+val containsX = Predicate[String](_.contains("x"))
+val containsY = Predicate[String](_.contains("y"))
 
 val containsXAndY = containsX && containsY
 val containsXOrY = containsX || containsY
@@ -29,8 +29,8 @@ Compose with `for`.
 ```scala
 import scalautil._
 
-val containsX = Predicate[String](s => s.contains("x"))
-val containsY = Predicate[String](s => s.contains("y"))
+val containsX = Predicate[String](_.contains("x"))
+val containsY = Predicate[String](_.contains("y"))
 
 val containsXAndY = for{
 	x <- containsX
