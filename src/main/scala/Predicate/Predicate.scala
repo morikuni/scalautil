@@ -7,19 +7,21 @@ case class Predicate[A](run: A => Boolean){
 
 	def flatMap(f: Boolean => Predicate[A]): Predicate[A] = Predicate(a => f(run(a)).run(a))
 
-	def &&(that: Predicate[A]): Predicate[A] = Predicate(a => {
+	def &&(that: => Predicate[A]): Predicate[A] = Predicate(a => {
 		val b = run(a)
-		b && that.run(a)
+		lazy val p = that
+		b && p.run(a)
 	})
 
-	def and(that: Predicate[A]): Predicate[A] = &&(that)
+	def and(that: => Predicate[A]): Predicate[A] = &&(that)
 
-	def ||(that: Predicate[A]): Predicate[A] = Predicate(a => {
+	def ||(that: => Predicate[A]): Predicate[A] = Predicate(a => {
 		val b = run(a)
-		b || that.run(a)
+		lazy val p = that
+		b || p.run(a)
 	})
 
-	def or(that: Predicate[A]): Predicate[A] = ||(that)
+	def or(that: => Predicate[A]): Predicate[A] = ||(that)
 
 	def unary_!(): Predicate[A] = Predicate(a => !run(a))
 
