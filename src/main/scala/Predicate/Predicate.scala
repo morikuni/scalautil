@@ -23,7 +23,7 @@ case class Predicate[A](run: A => Boolean){
 
 	def unary_!(): Predicate[A] = Predicate(a => !run(a))
 
-	def not: Predicate[A] = !this
+	def inverse: Predicate[A] = !this
 }
 
 object Predicate{
