@@ -1,6 +1,6 @@
 package scalautil
 
-case class Predicate[A](run: A => Boolean){
+case class Predicate[A](run: A => Boolean) extends Function1[A, Boolean]{
 	import Predicate._
 
 	def apply(a: A): Boolean = run(a)
@@ -39,10 +39,6 @@ case class Predicate[A](run: A => Boolean){
 }
 
 object Predicate{
-	import scala.language.implicitConversions
-
-	implicit def predicateAsFunction[A](predicate: Predicate[A]): A => Boolean = predicate.run
-
 	def point[A](b: Boolean): Predicate[A] = Predicate(_ => b)
 
 	def map2[A](p1: Predicate[A], p2: Predicate[A])(f: (Boolean, Boolean) => Boolean) = for{
