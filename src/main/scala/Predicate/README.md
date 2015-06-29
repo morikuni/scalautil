@@ -4,48 +4,24 @@ Predicate extends Function `A => Boolean`.
 
 ## Usage
 
-Compose with `&&` or `||`.
-
 ```scala
 import scalautil._
 
 val containsX = Predicate[String](_.contains("x"))
 val containsY = Predicate[String](_.contains("y"))
 
-val containsXAndY = containsX && containsY
-val containsXOrY = containsX || containsY
+val containsXAndNotContainsY = containsX && !containsY
 
-println(containsXAndY("x")) //false
-println(containsXAndY("y")) //false
-println(containsXAndY("xy")) //true
+println(containsXAndNotContainsY("x")) //true
+println(containsXAndNotContainsY("y")) //false
+println(containsXAndNotContainsY("xy")) //false
 
-println(containsXOrY("x")) //true
-println(containsXOrY("y")) //true
-println(containsXOrY("xy")) //true
-```
-
-Compose with `for`.
-
-```scala
-import scalautil._
-
-val containsX = Predicate[String](_.contains("x"))
-val containsY = Predicate[String](_.contains("y"))
-
-val containsXAndY = for{
+val exclusiveOr = for{
 	x <- containsX
 	y <- containsY
-} yield x && y
-val containsXOrY = for{
-	x <- containsX
-	y <- containsY
-} yield x || y
+} yield (x && !y) || (!x && y)
 
-println(containsXAndY("x")) //false
-println(containsXAndY("y")) //false
-println(containsXAndY("xy")) //true
-
-println(containsXOrY("x")) //true
-println(containsXOrY("y")) //true
-println(containsXOrY("xy")) //true
+println(exclusiveOr("x")) //true
+println(exclusiveOr("y")) //true
+println(exclusiveOr("xy")) //false
 ```
